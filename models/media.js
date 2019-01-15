@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize')
+
 const sequelize = require('../database/database')
 
 const Media = sequelize.define('media', {
     id: {
-        tpye: Sequelize.INTEGER,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
@@ -29,5 +30,7 @@ const Media = sequelize.define('media', {
         allowNull: false
     }
 })
+
+
 
 module.exports = Media

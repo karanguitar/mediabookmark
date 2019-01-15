@@ -5,6 +5,6 @@ const router = express.Router()
 const projectController = require('../controllers/projectController')
 
 
-router.get('/', projectController.testPage)
+router.get('/media', projectController.getProducts)
 
 module.exports = router
