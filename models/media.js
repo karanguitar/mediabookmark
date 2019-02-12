@@ -18,17 +18,24 @@ const Media = sequelize.define('media', {
         allowNull: false
     },
     dateCompleted:{
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: false
     },
     notes:{
-        type: Sequelize.DATE,
+        type: Sequelize.TEXT,
         allowNull: false
     },
     rating:{
         type: Sequelize.INTEGER,
         allowNull: false
+    },
+    webLink: {
+        type: Sequelize.STRING,
+    },
+    videoId: {
+        type: Sequelize.STRING,
     }
+
 })
 
 

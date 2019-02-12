@@ -1,0 +1,21 @@
+.single-media{
+
+    height: 90vh;
+    line-height: 2rem;
+    padding-right: 2rem;
+}
+
+.single-media__content{
+    min-height: 300px;
+    max-height: 340px;
+    overflow-y: scroll;
+    padding-right: 2rem;
+}
+
+.single-media__actions{
+    display: flex;
+   
+}
+
+
+
