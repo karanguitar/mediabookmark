@@ -16,6 +16,7 @@ export default class EditMedia extends Component {
     rating: this.props.editMedia.rating,
     webLink: this.props.editMedia.webLink
 
+    
   }
 
   handleChange = (event) =>{
