@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ItemMedia from './ItemMedia'
 import './fetchMedia.css';
 import { List } from 'semantic-ui-react'
+import history from '../../history'
 
 export default class FetchMedia extends Component {
 
@@ -27,7 +28,10 @@ export default class FetchMedia extends Component {
                 <ItemMedia activeItem={this.activeItem} id={item.id} selectedMedia={this.props.selectedMedia} name={item.name} notes={item.notes} />
             </List.Item>
         )
-    })  
+    })
+    if(!this.props.currentUser){
+        history.push('/')
+      }else{  
       
     return (
       <div>
@@ -39,4 +43,5 @@ export default class FetchMedia extends Component {
       </div>
     )
   }
+}
 }

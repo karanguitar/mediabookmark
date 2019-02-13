@@ -10,7 +10,7 @@ const ItemMedia = ({name, notes, id, selectedMedia, activeItem}) => {
     return (
         <div onClick={() => combineFunction(id)}>
             <h3>{name}</h3>
-            <p>{notes.slice(1, 100)}...</p>
+            <p>{notes.slice(0, 100)}...</p>
             
         </div>
     );

@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
-import {Redirect, Link} from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import { ValidatorForm } from 'react-form-validator-core';
-import TextValidator from '../Validation'
+import TextValidator from '../../Validation'
+import history from '../../history'
 
+export default class EditMedia extends Component {
 
-export default class PostMedia extends Component {
 
   state={
-    name: "",
-    notes: "",
-    dateCompleted: "",
-    mediaType: "",
-    rating: "", 
-    webLink: ""
+    id: this.props.editMedia.id,
+    name: this.props.editMedia.name,
+    notes: this.props.editMedia.notes,
+    dateCompleted: this.props.editMedia.dateCompleted,
+    mediaType: this.props.editMedia.mediaType,
+    rating: this.props.editMedia.rating,
+    webLink: this.props.editMedia.webLink
 
   }
 
@@ -20,36 +22,22 @@ export default class PostMedia extends Component {
     this.setState({[event.target.name]: event.target.value})
   }
 
-  handleSubmit = (event) =>{
+  handleEditSubmit = (event) =>{
     event.preventDefault()
-    const {name, notes, dateCompleted, mediaType, rating, webLink} = this.state
-    this.props.handleSubmit(name, notes, dateCompleted, mediaType, rating, webLink)
-    this.setState({
-      name: "",
-      notes: "",
-      dateCompleted: "",
-      mediaType: "",
-      rating: "",
-      webLink: ""
-    })
-
+    const {id, name, notes, dateCompleted, mediaType, rating, webLink} = this.state
+    this.props.handleEditSubmit(id, name, notes, dateCompleted, mediaType, rating, webLink)
 
   }
 
-
-
   render() {
-    const { redirect } = this.state;
-
-    if (redirect) {
-      return <Redirect to='/'/>;
-    }
+    if(!this.props.currentUser){
+      history.push('/')
+    }else{
     return (
-      <div className="ui container">
-
-        <ValidatorForm
+      <div>
+      <ValidatorForm
               ref="form"
-              onSubmit={this.handleSubmit}
+              onSubmit={this.handleEditSubmit}
               className="ui form"
           >
           <div className="field">
@@ -69,9 +57,8 @@ export default class PostMedia extends Component {
           <TextValidator
                 onChange={this.handleChange}
                 name="notes"
-                inputType="textarea"
-                type="text"
                 value={this.state.notes}
+                inputType="textarea"
                 validators={['required']}
                 errorMessages={['This field is required']}
             />
@@ -118,11 +105,11 @@ export default class PostMedia extends Component {
 
             
             <button className="ui positive button" type="submit">Submit</button>
-            <Link className="ui button" to="/">Cancel </Link>
+            <Link className="ui button" to="/dashboard">Cancel </Link>
         </ValidatorForm>
-
         
       </div>
     )
   }
+}
 }

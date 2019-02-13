@@ -5,11 +5,10 @@ import history from './history';
 import {Grid, Responsive} from 'semantic-ui-react'
 
 import Toolbar from './components/util/toolbar/Toolbar'
-import SignedOutToolbar from './components/util/toolbar/SignedOutToolbar'
-import PostMedia from './components/PostMedia'
-import FetchMedia from './components/FetchMedia'
-import DisplaySingleMedia from './components/DisplaySingleMedia'
-import EditMedia from './components/EditMedia'
+import PostMedia from './components/project/PostMedia'
+import FetchMedia from './components/project/FetchMedia'
+import DisplaySingleMedia from './components/project/DisplaySingleMedia'
+import EditMedia from './components/project/EditMedia'
 
 import HomePage from './components/marketing/HomePage'
 import AboutPage from './components/marketing/AboutPage'
@@ -108,7 +107,7 @@ class App extends Component {
     })
     .then((result) =>{
       const newList = [...this.state.media, result.data.newPost]
-      this.setState({media: newList}, () => history.push('/'))
+      this.setState({media: newList}, () => history.push('/dashboard'))
       
     })
     .catch(err => console.log(err))
@@ -142,7 +141,7 @@ class App extends Component {
       this.setState({
         media: listCopy,
         selectedVideo: result.data.editedPost
-      }, () => {history.push("/")} )
+      }, () => {history.push("/dashboard")} )
 
     })
     .catch(err => console.log(err))
@@ -160,6 +159,38 @@ class App extends Component {
     })
   }
 
+  renderForCurrentUser = () =>{
+    if(this.state.currentUser){
+      return( 
+              <>
+                <Grid.Column width={4}>
+                  <Route 
+                      render={(props) => <FetchMedia {...props} currentUser={this.state.currentUser} selectedMedia={this.selectedMedia} media={this.state.media}/>}
+                      path="/dashboard" exact
+                      />
+                </Grid.Column>
+                <Grid.Column width={10}>
+                  <Route 
+                    render={(props) => <PostMedia {...props} currentUser={this.state.currentUser}  handleSubmit={this.handleSubmit} />}
+                    path="/post" 
+                    />
+                    <Route 
+                    render={(props) => <DisplaySingleMedia {...props} currentUser={this.state.currentUser} fetchEditMedia={this.fetchEditMedia} deleteMedia={this.deleteMedia} selectedVideo={this.state.selectedVideo} /> }
+                    path="/dashboard" exact
+                    />
+                    <Route 
+                    render={(props) => <EditMedia {...props} currentUser={this.state.currentUser} handleEditSubmit={this.handleEditSubmit} editMedia={this.state.editMedia} /> }
+                    path="/edit/:id"
+                    />
+                  </Grid.Column>
+                  <Grid.Column width={2}>
+                    <Link className="ui positive button" to="/post">Add Bookmark</Link>
+                  </Grid.Column>
+                  </>
+      )
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -170,32 +201,10 @@ class App extends Component {
                <Toolbar currentUser={this.state.currentUser}>
                 <Grid>
                 <Grid.Column width={16}>
-                  <Route path="/home" component={HomePage}/>
+                  <Route exact path="/" component={HomePage}/>
                   <Route path="/about"  component={AboutPage}/>
                 </Grid.Column>
-                <Grid.Column width={4}>
-                  <Route 
-                      render={(props) => <FetchMedia {...props} selectedMedia={this.selectedMedia} media={this.state.media}/>}
-                      path="/" exact
-                      />
-                </Grid.Column>
-                <Grid.Column width={10}>
-                  <Route 
-                    render={(props) => <PostMedia {...props} created={this.state.created} handleSubmit={this.handleSubmit} />}
-                    path="/post" 
-                    />
-                    <Route 
-                    render={(props) => <DisplaySingleMedia {...props} fetchEditMedia={this.fetchEditMedia} deleteMedia={this.deleteMedia} selectedVideo={this.state.selectedVideo} /> }
-                    path="/" exact
-                    />
-                    <Route 
-                    render={(props) => <EditMedia {...props} handleEditSubmit={this.handleEditSubmit} editMedia={this.state.editMedia} /> }
-                    path="/edit/:id"
-                    />
-                  </Grid.Column>
-                  <Grid.Column width={2}>
-                    <Link className="ui positive button" to="/post">Add Bookmark</Link>
-                  </Grid.Column>
+                {this.renderForCurrentUser()}
                 </Grid>
               </Toolbar>
             </div>   

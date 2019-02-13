@@ -1,7 +1,11 @@
 const Media = require('../models/media')
 
 exports.getMedia = (req, res, next) => {
-    Media.findAll()
+    Media.findAll({
+      where:{
+        userId: req.user.id
+      }
+    })
     .then((media) =>{
       res.send({media: media})
     })
@@ -34,7 +38,8 @@ exports.postMedia = (req, res, next) =>{
     notes,
     rating,
     videoId,
-    webLink
+    webLink,
+    userId: req.user.id
   })
   .then((result) => res.send({newPost: result.dataValues}))
   .catch(err => console.log(err))

@@ -1,10 +1,11 @@
 import React from 'react';
 import './displaySingleMedia.css'
-import Button from './util/Button'
+import Button from '../util/Button'
 import { Segment, Label, Statistic, Divider, Embed} from 'semantic-ui-react'
-import PlaySign from '../images/play.png'
+import PlaySign from '../../images/play.png'
 
-const DisplaySingleMedia = ({selectedVideo, deleteMedia, fetchEditMedia}) => {
+
+const ExampleDisplaySingleMedia = ({selectedVideo, deleteMedia, fetchEditMedia}) => {
 
     const videoRender = () =>{
         if(selectedVideo.webLink){
@@ -14,7 +15,6 @@ const DisplaySingleMedia = ({selectedVideo, deleteMedia, fetchEditMedia}) => {
         }
     }
 
-    if(selectedVideo){
         return (
             <div>
                 <div className="single-media">
@@ -41,16 +41,7 @@ const DisplaySingleMedia = ({selectedVideo, deleteMedia, fetchEditMedia}) => {
                 </div>
             </div>
         )
-    }else{
-      return(
-          <div>
-        
-                <h1>Welcome to your dashboard. Click on Add Bookmark to begin. </h1>
-             
-          </div>
-      )
-    }
 
 }
 
-export default DisplaySingleMedia;
+export default ExampleDisplaySingleMedia;

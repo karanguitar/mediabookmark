@@ -14,9 +14,14 @@ const FixedMenuLayout = (props) => {
     if(props.currentUser){
       return(
         <>
-        <Menu.Item as='a'>Dashboard</Menu.Item>
+        <Menu.Item>
+          <Link to="/dashboard">Dashboard</Link>
+        </Menu.Item>
         <Dropdown position='right' item simple text='More'>
           <Dropdown.Menu >
+          <Dropdown.Item as="a" href="/about">
+              About
+            </Dropdown.Item>
             <Dropdown.Item as="a" href="/api/logout">
               Logout
             </Dropdown.Item>
@@ -25,9 +30,15 @@ const FixedMenuLayout = (props) => {
         </>
       )
     }else{
-      return( <Menu.Item>
+      return(
+        <>
+        <Menu.Item>
+          <Link to="/about">About</Link>
+        </Menu.Item> 
+        <Menu.Item>
           <a href="/api/auth/google">Login with Google</a>
         </Menu.Item>
+        </>
       )
     }
   }
@@ -37,7 +48,7 @@ const FixedMenuLayout = (props) => {
     <Menu fixed='top' inverted>
       <Container>
         <Menu.Item header>
-          <Link to="/">Media Bookmark</Link> 
+          <Link to={props.currentUser ? "/dashboard" : "/"}>Media Bookmark</Link> 
         </Menu.Item>
         <Menu.Menu position='right'>
           {toolbarContent()}

@@ -1,19 +1,20 @@
 import React, { Component } from 'react'
 import { Link} from 'react-router-dom'
 import { ValidatorForm } from 'react-form-validator-core';
-import TextValidator from '../Validation'
+import TextValidator from '../../Validation'
+import history from '../../history'
 
-export default class EditMedia extends Component {
 
+
+export default class PostMedia extends Component {
 
   state={
-    id: this.props.editMedia.id,
-    name: this.props.editMedia.name,
-    notes: this.props.editMedia.notes,
-    dateCompleted: this.props.editMedia.dateCompleted,
-    mediaType: this.props.editMedia.mediaType,
-    rating: this.props.editMedia.rating,
-    webLink: this.props.editMedia.webLink
+    name: "",
+    notes: "",
+    dateCompleted: "",
+    mediaType: "",
+    rating: "", 
+    webLink: ""
 
   }
 
@@ -21,19 +22,35 @@ export default class EditMedia extends Component {
     this.setState({[event.target.name]: event.target.value})
   }
 
-  handleEditSubmit = (event) =>{
+  handleSubmit = (event) =>{
     event.preventDefault()
-    const {id, name, notes, dateCompleted, mediaType, rating, webLink} = this.state
-    this.props.handleEditSubmit(id, name, notes, dateCompleted, mediaType, rating, webLink)
+    const {name, notes, dateCompleted, mediaType, rating, webLink} = this.state
+    this.props.handleSubmit(name, notes, dateCompleted, mediaType, rating, webLink)
+    this.setState({
+      name: "",
+      notes: "",
+      dateCompleted: "",
+      mediaType: "",
+      rating: "",
+      webLink: ""
+    })
+
 
   }
 
+
+
   render() {
+    if(this.props.currentUser ==="" || null){
+      history.push('/')
+    }else{
+
     return (
-      <div>
-      <ValidatorForm
+      <div className="ui container">
+
+        <ValidatorForm
               ref="form"
-              onSubmit={this.handleEditSubmit}
+              onSubmit={this.handleSubmit}
               className="ui form"
           >
           <div className="field">
@@ -53,8 +70,9 @@ export default class EditMedia extends Component {
           <TextValidator
                 onChange={this.handleChange}
                 name="notes"
-                value={this.state.notes}
                 inputType="textarea"
+                type="text"
+                value={this.state.notes}
                 validators={['required']}
                 errorMessages={['This field is required']}
             />
@@ -101,10 +119,12 @@ export default class EditMedia extends Component {
 
             
             <button className="ui positive button" type="submit">Submit</button>
-            <Link className="ui button" to="/">Cancel </Link>
+            <Link className="ui button" to="/dashboard">Cancel </Link>
         </ValidatorForm>
+
         
       </div>
     )
   }
+}
 }
