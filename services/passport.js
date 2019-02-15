@@ -1,14 +1,14 @@
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const Keys = require('../keys/keys')
-const User = require('../models/user')
+const db = require('../models/index')
 
 passport.serializeUser((user, done) =>{
   done(null, user.id)
 })
 
 passport.deserializeUser((id, done) =>{
-  User.findByPk(id)
+  db.User.findByPk(id)
   .then((user) =>{
     done(null, user)
   })
@@ -24,10 +24,10 @@ passport.use(new GoogleStrategy({
     const email = profile.emails[0].value
     const googleId = profile.id
 
-    User.findOne({where: {googleId: googleId}})
+    db.User.findOne({where: {googleId: googleId}})
     .then((existingUser) =>{
       if(!existingUser){
-        User.create({
+        db.User.create({
           googleId: googleId,
           email: email
         })

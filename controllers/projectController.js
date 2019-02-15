@@ -1,7 +1,7 @@
-const Media = require('../models/media')
+const db = require('../models/index')
 
 exports.getMedia = (req, res, next) => {
-    Media.findAll({
+    db.Media.findAll({
       where:{
         userId: req.user.id
       }
@@ -15,7 +15,7 @@ exports.getMedia = (req, res, next) => {
 exports.getSingleMedia = (req, res) =>{
   const id = req.params.id
   
-  Media.findByPk(id)
+  db.Media.findByPk(id)
   .then((media) =>{
     res.send({singleMedia: media})
   })
@@ -31,7 +31,7 @@ exports.postMedia = (req, res, next) =>{
   const webLink = req.body.webLink
   const videoId = req.body.videoId
 
-  Media.create({
+  db.Media.create({
     name,
     mediaType,
     dateCompleted,
@@ -48,7 +48,7 @@ exports.postMedia = (req, res, next) =>{
 exports.getEditMedia = (req, res) =>{
   const id = req.params.id
 
-  Media.findByPk(id)
+  db.Media.findByPk(id)
   .then((media) =>{
 
     res.send({EditMedia: media})
@@ -66,7 +66,7 @@ exports.postEditMedia = (req, res) =>{
   const webLink = req.body.webLink
   const videoId = req.body.videoId
 
-  Media.findByPk(id)
+  db.Media.findByPk(id)
   .then((media) =>{
     console.log(media)
     media.id= id
@@ -87,7 +87,7 @@ exports.postEditMedia = (req, res) =>{
 
 exports.deleteMedia = (req, res) =>{
   const id = req.params.id
-  Media.destroy({
+  db.Media.destroy({
     where:{
       id : id
     }
