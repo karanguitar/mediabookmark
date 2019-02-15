@@ -1,0 +1,14 @@
+{
+  "development":{
+  "username": "root",
+  "password": "license1",
+  "database": "book-database",
+  "host": "localhost",
+  "dialect": "mysql"
+  },
+  "production":{
+      "use_env_variable": "JAWSDB_URL",
+      "dialect": "mysql"
+
+  }
+}
