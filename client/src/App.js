@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   componentDidMount(){
-      this.fetchAllMedia()
+      this.fetchAllMedia() //this is causing 401 error because no user when first loaded 
       this.fetchCurrentUser()
     }
 
@@ -152,7 +152,6 @@ class App extends Component {
 
     axios.get('/api/current_user')
     .then((user) =>{
-      console.log(user)
       this.setState({
         currentUser:user.data 
       })

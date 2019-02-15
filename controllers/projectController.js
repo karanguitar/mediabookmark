@@ -68,7 +68,6 @@ exports.postEditMedia = (req, res) =>{
 
   db.Media.findByPk(id)
   .then((media) =>{
-    console.log(media)
     media.id= id
     media.name = name
     media.mediaType = mediaType
