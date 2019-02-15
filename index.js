@@ -5,10 +5,9 @@ const bodyParser = require('body-parser')
 
 const Keys = require('./keys/keys')
 
-const sequelize = require('./database/database')
+const db = require('./models/index')
 require('./services/passport')
-const User = require('./models/user')
-const Media = require('./models/media')
+
 
 const projectRoutes = require('./routes/projectRoutes')
 const authRoutes = require('./routes/authRoutes')
@@ -48,13 +47,11 @@ if(process.env.NODE_ENV === 'production'){
 
 const PORT = process.env.PORT || 5000 
 
-Media.belongsTo(User)
 
-sequelize
-  .sync()
-  .then(result => {
-    app.listen(PORT);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+db.sequelize.sync({force: true})
+.then(result => {
+app.listen(PORT);
+})
+.catch(err => {
+console.log(err);
+});

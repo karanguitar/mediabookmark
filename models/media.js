@@ -1,43 +1,45 @@
-const Sequelize = require('sequelize')
-
-const sequelize = require('../database/database')
-
-const Media = sequelize.define('media', {
+module.exports = function(sequelize, DataTypes){  
+    const Media = sequelize.define('media', {
     id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
     name: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     mediaType: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     dateCompleted:{
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     notes:{
-        type: Sequelize.TEXT,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     rating:{
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     webLink: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
     },
     videoId: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
     }
+
 
 })
 
+    Media.associate = (db) =>{
+        Media.belongsTo(db.User)
+    }
+    return Media
 
+}
 
-module.exports = Media
